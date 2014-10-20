@@ -2,6 +2,7 @@ define(function(require, exports, module) {
     var View = require('famous/core/View');
     var Surface = require('famous/core/Surface');
     var Scrollview = require('famous/views/Scrollview');
+    var ContainerSurface = require('famous/surfaces/ContainerSurface');
 
     var TweetView = require('views/TweetView');
 
@@ -24,7 +25,14 @@ define(function(require, exports, module) {
             groupScroll: true
         });
 
-        this.add(this._feed);
+        var container = new ContainerSurface({
+            properties: {
+                overflow: 'hidden'
+            }
+        });
+
+        this.add(container);
+        container.add(this._feed);
     }
 
     function _addTweets() {
@@ -32,6 +40,7 @@ define(function(require, exports, module) {
 
         for (var i = 0; i < this.options.tweetData.length; i++) {
             var tweetInfo = this.options.tweetData[i];
+            tweetInfo.index = i;
             tweets.push(new TweetView(tweetInfo));
         }
 
