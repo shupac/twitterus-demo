@@ -31,13 +31,17 @@ define(function(require, exports, module) {
     function _createButtons() {
         for (var i = 0; i < this.options.numButtons; i++) {
             var button = new Surface({
-                content: i + "",
+                content: i + '',
                 properties: {
-                    backgroundColor: "hsl(" + (i * 360 / this.options.numButtons) + ", 100%, 50%)"
+                    backgroundColor: 'hsl(' + (i * 360 / this.options.numButtons) + ', 100%, 50%)'
                 }
             });
 
             this._buttons.push(button);
+
+            button.on('click', function(i) {
+                this._eventOutput.emit('stateChange', i);
+            }.bind(this, i));
         }
 
         this._layout.sequenceFrom(this._buttons);

@@ -2,6 +2,7 @@ define(function(require, exports, module) {
     var View = require('famous/core/View');
     var Surface = require('famous/core/Surface');
     var HeaderFooterLayout = require('famous/views/HeaderFooterLayout');
+    var Lightbox = require('famous/views/Lightbox');
 
     var ButtonBar = require('views/ButtonBar');
 
@@ -9,10 +10,17 @@ define(function(require, exports, module) {
         View.apply(this, arguments);
 
         this._layout;
+        this.headers = [];
+        this.content = [];
 
         _createLayout.call(this);
         _createHeaders.call(this);
+        _createContent.call(this);
         _createButtonBar.call(this);
+
+        this.buttonBar.on('stateChange', function(index) {
+            this.contentLightbox.show(this.content[index]);
+        }.bind(this));
     }
 
     AppView.prototype = Object.create(View.prototype);
@@ -30,6 +38,12 @@ define(function(require, exports, module) {
         });
 
         this.add(this._layout);
+
+        this.headerLightbox = new Lightbox();
+        this.contentLightbox = new Lightbox();
+
+        this._layout.header.add(this.headerLightbox);
+        this._layout.content.add(this.contentLightbox);
     }
 
     function _createHeaders() {
@@ -40,6 +54,19 @@ define(function(require, exports, module) {
         });
 
         this._layout.header.add(background);
+    }
+
+    function _createContent() {
+        for (var i = 0; i < 3; i++) {
+            var surface = new Surface({
+                content: i + '',
+                properties: {
+                    backgroundColor: 'hsl(' + (i * 360 / 3) + ', 100%, 50%)'
+                }
+            });
+
+            this.content.push(surface);
+        }
     }
 
     function _createButtonBar() {
