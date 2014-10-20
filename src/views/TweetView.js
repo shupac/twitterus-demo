@@ -23,7 +23,12 @@ define(function(require, exports, module) {
     TweetView.prototype = Object.create(View.prototype);
     TweetView.prototype.constructor = TweetView;
 
-    TweetView.DEFAULT_OPTIONS = {};
+    TweetView.DEFAULT_OPTIONS = {
+        index: undefined,
+        tweet: undefined,
+        user: undefined,
+        timestamp: undefined
+    };
 
     module.exports = TweetView;
 });

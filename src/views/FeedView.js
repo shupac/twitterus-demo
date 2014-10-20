@@ -17,7 +17,7 @@ define(function(require, exports, module) {
     FeedView.prototype.constructor = FeedView;
 
     FeedView.DEFAULT_OPTIONS = {
-        tweetData: []
+        tweetData: undefined
     };
 
     function _createScrollview() {
