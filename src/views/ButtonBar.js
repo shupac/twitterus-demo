@@ -8,6 +8,7 @@ define(function(require, exports, module) {
 
         this._layout;
         this._buttons = [];
+        this._state;
 
         _createLayout.call(this);
         _createButtons.call(this);
@@ -39,13 +40,17 @@ define(function(require, exports, module) {
 
             this._buttons.push(button);
 
-            button.on('click', function(i) {
-                this._eventOutput.emit('stateChange', i);
-            }.bind(this, i));
+            button.on('click', this.selectState.bind(this, i));
         }
 
         this._layout.sequenceFrom(this._buttons);
     }
+
+    ButtonBar.prototype.selectState = function(index) {
+        if (index === this._state) return;
+        this._eventOutput.emit('stateChange', index);
+        this._state = index;
+    };
 
     module.exports = ButtonBar;
 });

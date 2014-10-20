@@ -21,6 +21,8 @@ define(function(require, exports, module) {
         this.buttonBar.on('stateChange', function(index) {
             this.contentLightbox.show(this.content[index]);
         }.bind(this));
+
+        this.buttonBar.selectState(0);
     }
 
     AppView.prototype = Object.create(View.prototype);
