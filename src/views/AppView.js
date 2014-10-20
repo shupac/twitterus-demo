@@ -3,6 +3,8 @@ define(function(require, exports, module) {
     var Surface = require('famous/core/Surface');
     var HeaderFooterLayout = require('famous/views/HeaderFooterLayout');
 
+    var ButtonBar = require('views/ButtonBar');
+
     function AppView() {
         View.apply(this, arguments);
 
@@ -10,6 +12,7 @@ define(function(require, exports, module) {
 
         _createLayout.call(this);
         _createHeaders.call(this);
+        _createButtonBar.call(this);
     }
 
     AppView.prototype = Object.create(View.prototype);
@@ -37,6 +40,12 @@ define(function(require, exports, module) {
         });
 
         this._layout.header.add(background);
+    }
+
+    function _createButtonBar() {
+        this.buttonBar = new ButtonBar();
+
+        this._layout.footer.add(this.buttonBar);
     }
 
     module.exports = AppView;
