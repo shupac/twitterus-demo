@@ -34,7 +34,8 @@ define(function(require, exports, module) {
     AppView.DEFAULT_OPTIONS = {
         headerSize: undefined,
         footerSize: undefined,
-        sections: undefined
+        sections: undefined,
+        transitions: undefined
     };
 
     function _createLayout() {
@@ -45,8 +46,8 @@ define(function(require, exports, module) {
 
         this.add(this._layout);
 
-        this.headerLightbox = new Lightbox();
-        this.contentLightbox = new Lightbox();
+        this.headerLightbox = new Lightbox(this.options.transitions.header);
+        this.contentLightbox = new Lightbox(this.options.transitions.content);
 
         this._layout.header.add(this.headerLightbox);
         this._layout.content.add(this.contentLightbox);

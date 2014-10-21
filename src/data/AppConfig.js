@@ -1,4 +1,4 @@
-define(function(requre, exports, module) {
+define(function(require, exports, module) {
     module.exports = {
         headerSize: 44,
         footerSize: 60,
@@ -24,6 +24,10 @@ define(function(requre, exports, module) {
                     iconUrl: 'content/images/messages.svg'                    
                 }
             }
-        ]
+        ],
+        transitions: {
+            header: {},
+            content: {}
+        }
     };
 });
