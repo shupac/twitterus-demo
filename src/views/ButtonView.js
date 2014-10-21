@@ -3,14 +3,27 @@ define(function(require, exports, module) {
     var Surface = require('famous/core/Surface');
     var Modifier = require('famous/core/Modifier');
     var Transform = require('famous/core/Transform');
+    var Transitionable = require('famous/transitions/Transitionable');
+    var SpringTransition = require('famous/transitions/SpringTransition');
+
+    Transitionable.registerMethod('spring', SpringTransition);
 
     function ButtonView() {
         View.apply(this, arguments);
+
+        this.buttonScale = new Transitionable(1);
 
         _createButton.call(this);
 
         this.buttonSurface.on('click', function() {
             this._eventOutput.emit('buttonClick', this.options.index);
+
+            this.buttonScale.set(0.7);
+            this.buttonScale.set(1, {
+                method: 'spring',
+                period: 300,
+                dampingRatio: 0.5
+            });
         }.bind(this));
     }
 
@@ -26,7 +39,11 @@ define(function(require, exports, module) {
     function _createButton() {
         this.buttonModifier = new Modifier({
             origin: [0.5, 0.5],
-            align: [0.5, 0.5]
+            align: [0.5, 0.5],
+            transform: function() {
+                var scale = this.buttonScale.get();
+                return Transform.scale(scale, scale, 1);
+            }.bind(this)
         });
 
         this.buttonSurface = new Surface({
