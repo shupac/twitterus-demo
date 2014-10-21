@@ -22,33 +22,20 @@ define(function(require, exports, module) {
     ButtonBar.prototype.constructor = ButtonBar;
 
     ButtonBar.DEFAULT_OPTIONS = {
-        buttons: [
-            {
-                label: 'Home',
-                iconUrl: 'content/images/home.svg'
-            },
-            {
-                label: 'Profile',
-                iconUrl: 'content/images/user.svg'
-            },
-            {
-                label: 'Messages',
-                iconUrl: 'content/images/messages.svg'
-            }
-        ]
+        sections: undefined
     };
 
     function _createLayout() {
         this._layout = new GridLayout({
-            dimensions: [this.options.buttons.length, 1]
+            dimensions: [this.options.sections.length, 1]
         });
 
         this.add(this._layout);
     }
 
     function _createButtons() {
-        for (var i = 0; i < this.options.buttons.length; i++) {
-            var buttonInfo = this.options.buttons[i];
+        for (var i = 0; i < this.options.sections.length; i++) {
+            var buttonInfo = this.options.sections[i].button;
             buttonInfo.index = i;
             var button = new ButtonView(buttonInfo);
 

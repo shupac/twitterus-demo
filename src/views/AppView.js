@@ -21,6 +21,7 @@ define(function(require, exports, module) {
         _createButtonBar.call(this);
 
         this.buttonBar.on('stateChange', function(index) {
+            this.headerLightbox.show(this.headers[index]);
             this.contentLightbox.show(this.content[index]);
         }.bind(this));
 
@@ -31,8 +32,9 @@ define(function(require, exports, module) {
     AppView.prototype.constructor = AppView;
 
     AppView.DEFAULT_OPTIONS = {
-        headerSize: 44,
-        footerSize: 60
+        headerSize: undefined,
+        footerSize: undefined,
+        sections: undefined
     };
 
     function _createLayout() {
@@ -58,6 +60,20 @@ define(function(require, exports, module) {
         });
 
         this._layout.header.add(background);
+
+        for (var i = 0; i < this.options.sections.length; i++) {
+            var title = new Surface({
+                content: this.options.sections[i].title,
+                properties: {
+                    color: 'white',
+                    fontSize: '20px',
+                    textAlign: 'center',
+                    lineHeight: this.options.headerSize + 'px'
+                }
+            });
+
+            this.headers.push(title);
+        }
     }
 
     function _createContent() {
@@ -78,7 +94,9 @@ define(function(require, exports, module) {
     }
 
     function _createButtonBar() {
-        this.buttonBar = new ButtonBar();
+        this.buttonBar = new ButtonBar({
+            sections: this.options.sections
+        });
 
         this._layout.footer.add(this.buttonBar);
     }
