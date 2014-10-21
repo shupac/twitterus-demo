@@ -11,6 +11,7 @@ define(function(require, exports, module) {
     function ButtonView() {
         View.apply(this, arguments);
 
+        this.toggleState = false;
         this.buttonScale = new Transitionable(1);
 
         _createButton.call(this);
@@ -40,6 +41,7 @@ define(function(require, exports, module) {
         this.buttonModifier = new Modifier({
             origin: [0.5, 0.5],
             align: [0.5, 0.5],
+            opacity: 0.5,
             transform: function() {
                 var scale = this.buttonScale.get();
                 return Transform.scale(scale, scale, 1);
@@ -54,6 +56,12 @@ define(function(require, exports, module) {
 
         this.add(this.buttonModifier).add(this.buttonSurface);
     }
+
+    ButtonView.prototype.toggle = function() {
+        var opacity = this.toggleState ? 0.5 : 1;
+        this.buttonModifier.opacityFrom(opacity);
+        this.toggleState = !this.toggleState;
+    };
 
     module.exports = ButtonView;
 });
