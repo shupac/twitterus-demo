@@ -7,6 +7,7 @@ define(function(require, exports, module) {
     var ButtonBar = require('views/ButtonBar');
     var FeedView = require('views/FeedView');
     var TweetData = require('data/TweetData');
+    var ProfileView = require('views/ProfileView');
 
     function AppView() {
         View.apply(this, arguments);
@@ -92,6 +93,8 @@ define(function(require, exports, module) {
         this.content[0] = new FeedView({
             tweetData: TweetData
         });
+
+        this.content[1] = new ProfileView();
     }
 
     function _createButtonBar() {
